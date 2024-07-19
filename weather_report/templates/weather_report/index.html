@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link href="{% static 'weather_report/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Введите название города</h1>
+        <form method="get" class="form-inline justify-content-center mt-4">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" name="city" placeholder="Название города">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Получить прогноз</button>
+        </form>
+        {% if last_city %}
+            <form method="get" class="text-center mt-4">
+                <input type="hidden" name="city" value="{{ last_city }}">
+                <button type="submit" class="btn btn-secondary">Ранее вы смотрели {{ last_city }}</button>
+            </form>
+        {% endif %}
+        {% if weather_info %}
+            <div class="weather-data">
+                <h2 class="text-center">Прогноз погоды в {{ weather_info.country }}, {{ weather_info.city }}:</h2>
+                <h1>{{ weather_info.emoji }}</h1>
+                <h1>{{ weather_info.description }}</h1>
+                <p>Температура: {{ weather_info.temperature }}°C</p>
+                <p>Ощущается как: {{ weather_info.feels_like }}°C</p>
+                <p>Влажность: {{ weather_info.humidity }}%</p>
+                <p>Скорость ветра: {{ weather_info.wind_speed }} км/ч</p>
+                <p>Направление ветра: {{ weather_info.wind_direction }}</p>
+                <p>Давление: {{ weather_info.pressure }} hPa</p>
+            </div>
+        {% endif %}
+        {% if search_history_data %}
+            <div class="search-history mt-4">
+                <h3>История поиска:</h3>
+                <ul class="list-group">
+                    {% for history in search_history_data %}
+                        <li class="list-group-item">
+                            <a href="?city={{ history.city }}">{{ history.weather }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
