@@ -13,7 +13,7 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/yourusername/weather-report.git
+git clone https://github.com/anxnas/weather-report.git
 cd weather-report
 ```
 
